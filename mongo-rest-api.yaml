@@ -12,8 +12,7 @@ spec:
       targetPort: 8080
   selector:
     app: mongo-rest-api
-    tier: compute
-  type: NodePort
+  type: LoadBalancer
 ---
 apiVersion: extensions/v1beta1
 kind: Deployment
@@ -28,9 +27,7 @@ spec:
     metadata:
       labels:
         app: mongo-rest-api
-        tier: compute
     spec:
-     hostNetwork: true
      containers:
         - image: fmrtl73/px-rest-apis
           imagePullPolicy: Always

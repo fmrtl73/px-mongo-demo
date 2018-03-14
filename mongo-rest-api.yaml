@@ -1,0 +1,42 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongodb-rest-api
+  labels:
+    app: px-rest-api
+spec:
+  ports:
+    - port: 8080
+      protocol: TCP
+      targetPort: 8080
+  selector:
+    app: mongodb-rest-api
+    tier: compute
+  type: NodePort
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: mongodb-rest-api
+  labels:
+    app: px-rest-api
+spec:
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: mongodb-rest-api
+        tier: compute
+    spec:
+      containers:
+        - image: fmrtl73/px-rest-apis
+          imagePullPolicy: Always
+          name: mongodb-rest-api
+          env:
+            - name: spring_profiles_active
+              value: prod
+          ports:
+            - containerPort: 8080
+

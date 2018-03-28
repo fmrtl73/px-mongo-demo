@@ -1,0 +1,41 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongo-rest-api
+  labels:
+    app: px-rest-api
+spec:
+  ports:
+    - port: 8080
+      protocol: TCP
+      targetPort: 8080
+  selector:
+    app: mongo-rest-api
+  type: LoadBalancer
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: mongo-rest-api
+  labels:
+    app: px-rest-api
+spec:
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: mongo-rest-api
+    spec:
+     containers:
+        - image: fmrtl73/px-rest-apis
+          imagePullPolicy: Always
+          name: mongo-rest-api
+          env:
+            - name: spring_profiles_active
+              value: prod
+            - name: mongoSvcName
+              value: px-mongo-mongodb
+          ports:
+            - containerPort: 8080

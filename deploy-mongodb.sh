@@ -1,6 +1,5 @@
-kubectl create -f sc.yaml
-kubectl create -f pvc.yaml
-helm install --name px-mongo \
-    --set persistence.existingClaim=px-mongo-pvc \
+helm install --name mongo \
     stable/mongodb
-kubectl create -f mongo-rest-api.yaml
+sleep 10
+kubectl create -f api.yaml
+kubectl scale --replicas=3 deploy/mongo-rest-api

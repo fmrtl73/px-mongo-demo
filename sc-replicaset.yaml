@@ -1,9 +1,9 @@
 kind: StorageClass
 apiVersion: storage.k8s.io/v1beta1
 metadata:
-    name: px-ha-sc
+    name: px-ha-2-sc
 provisioner: kubernetes.io/portworx-volume
 parameters:
-   repl: "3"
+   repl: "2"
    io_priority: "high"
    fs: "xfs"

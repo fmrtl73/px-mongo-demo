@@ -34,7 +34,8 @@ spec:
           name: mongo-rest-api
           env:
             - name: spring_profiles_active
-              value: prod
+              value: replicaset
+            - name: mongoSvcName
+              value: px-mongodb-replicaset
           ports:
             - containerPort: 8080
-
